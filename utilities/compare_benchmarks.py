@@ -1,28 +1,38 @@
 import matplotlib.pyplot as plt
 
 
-def compare_benchmarks(benchmark1, benchmark2):
-    plt.plot(benchmark1["times"], label=benchmark1["name"])
-    plt.plot(benchmark2["times"], label=benchmark2["name"])
+def compare_benchmarks(*benchmarks):
+    for benchmark in benchmarks:
+        plt.plot(benchmark["times"], label=benchmark["name"])
+
     plt.xlabel("Iteration")
     plt.ylabel("Time (seconds)")
     plt.legend()
-    plt.title(f"Performance Results for {benchmark1['name']} and {benchmark2['name']}")
+
+    names = ", ".join([benchmark["name"] for benchmark in benchmarks])
+
+    plt.title(f"Performance Results for {names}")
     plt.show()
 
 
-def compare_statistics_benchmarks(benchmark1, benchmark2):
-    metrics = ["mean", "maximum", "minimum", "median"]
-    _, axs = plt.subplots(2, 2, figsize=(10, 10))
+def compare_statistics_benchmarks(*benchmarks):
+    metrics = ["mean", "median", "minimum", "maximum"]
+    num_metrics = len(metrics)
+    num_benchmarks = len(benchmarks)
+
+    _, axs = plt.subplots(num_metrics // 2, 2, figsize=(10, 10))
+    plt.title(f"Statistical comparison for {num_benchmarks} benchmarks")
 
     for i, metric in enumerate(metrics):
-        value1 = benchmark1[metric]
-        value2 = benchmark2[metric]
-        row = i // 2
-        col = i % 2
 
-        axs[row, col].bar([benchmark1["name"], benchmark2["name"]], [value1, value2])
-        axs[row, col].set_ylabel(metric.capitalize() + ' time (seconds)')
+        for benchmark in benchmarks:
+            row = i // 2
+            col = i % 2
 
-    plt.title(f"Statistical comparison for for {benchmark1['name']} and {benchmark2['name']}")
+            values = [benchmark[metric]]
+            names = [benchmark["name"]]
+
+            axs[row, col].bar(names, values)
+            axs[row, col].set_ylabel(metric.capitalize() + " time (seconds)")
+
     plt.show()
