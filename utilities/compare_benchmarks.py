@@ -24,7 +24,6 @@ def compare_statistics_benchmarks(*benchmarks):
     plt.title(f"Statistical comparison for {num_benchmarks} benchmarks")
 
     for i, metric in enumerate(metrics):
-
         for benchmark in benchmarks:
             row = i // 2
             col = i % 2

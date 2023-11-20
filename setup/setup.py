@@ -27,10 +27,12 @@ def generate(
         help="The location where the file will be saved. The script will automatically rename all the files according to their contents.",
     ),
 ) -> None:
-    # create_numeric_dataframe_file(num_rows, num_cols, seed, name)
-    # create_string_dataframe_file(
-    #     num_rows, num_cols, seed, name.replace(".csv", "_string.csv")
-    # )
+    create_numeric_dataframe_file(
+        num_rows, num_cols, seed, name.replace(".csv", "_number.csv")
+    )
+    create_string_dataframe_file(
+        num_rows, num_cols, seed, name.replace(".csv", "_string.csv")
+    )
     create_datasource_file(
         num_rows, num_cols, seed, name.replace(".csv", "_datasource.csv")
     )
@@ -54,14 +56,16 @@ def create_numeric_dataframe_file(
     # set random seed
     np.random.seed(seed)
 
-    # create DataFrame with random values
-    data = np.random.rand(num_rows, num_cols)
+    # create DataFrame with random integers
+    data = np.random.randint(
+        config.RANDOM_INT_MIN, config.RANDOM_INT_MAX, size=(num_rows, num_cols)
+    )
     df = pd.DataFrame(data)
 
     # save DataFrame to CSV file
     df.to_csv(name, index=False)
 
-    print(f"Generation done.")
+    print(f"Generation done.\n")
 
 
 def create_string_dataframe_file(
@@ -88,6 +92,8 @@ def create_string_dataframe_file(
 
     # Export dataframe to CSV file
     df.to_csv(name, index=False)
+
+    print(f"Generation done.\n")
 
     return df
 
@@ -150,12 +156,7 @@ def create_datasource_file(
     The parameter num_cols gives the amonut of additional columns to be generated. Mandatory
     columns have been provided in the setup_config.py file.
     """
-    # log(
-    #     name=create_datasource_file.__name__,
-    #     num_rows=num_rows,
-    #     num_cols=num_cols,
-    #     seed=seed,
-    # )
+    log(create_datasource_file.__name__, num_rows, num_cols, seed, name)
 
     # Generate mandatory datetime columns
     df = pd.DataFrame(columns=config.DATASOURCE_FILE_MANDATORY_COLUMNS)
@@ -180,20 +181,27 @@ def create_datasource_file(
     for column_index in range(0, num_cols):
         np.random.seed(seed)
         data_type = np.random.choice(config.DATASOURCE_TYPES)
-    
+
         # Generate random data based on the selected data type
         data = None
         if data_type == str:
-            data = [generate_random_string(config.MAX_STRING_LENGTH, (seed + row) * 2) for row in range(0, num_rows)  ]
+            data = [
+                generate_random_string(
+                    config.MAX_STRING_LENGTH, (seed + row) * 2
+                )
+                for row in range(0, num_rows)
+            ]
         else:
             data = np.random.randint(0, 100, num_rows)
-        
+
         # Create a column with the generated data and data type
-        col_name = f'Column_{column_index}'
-        df = df.assign(**{col_name:data})
+        col_name = f"Column_{column_index}"
+        df = df.assign(**{col_name: data})
         seed += 1
 
     df.to_csv(name, index=False)
+
+    print(f"Generation done.\n")
 
 
 if __name__ == "__main__":
