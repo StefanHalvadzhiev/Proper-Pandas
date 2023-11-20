@@ -184,7 +184,7 @@ def create_datasource_file(
         # Generate random data based on the selected data type
         data = None
         if data_type == str:
-            data = [generate_random_string(config.MAX_STRING_LENGTH, seed) for _ in range(num_rows)]
+            data = [generate_random_string(config.MAX_STRING_LENGTH, (seed + row) * 2) for row in range(0, num_rows)  ]
         else:
             data = np.random.randint(0, 100, num_rows)
         
