@@ -5,18 +5,21 @@ import statistics
 from config import ITERATION_COUNT
 
 
+ITERATIONS = ITERATION_COUNT
+
+
 def benchmark(func: Callable[..., Any], *args: Any, **kwargs: Any):
     performance_result = {
         "name": func.__name__,
         "times": [],
-        "iterations": ITERATION_COUNT,
+        "iterations": ITERATIONS,
         "mean": 0,
         "maximum": 0,
         "minimum": 0,
         "median": 0,
     }
 
-    for i in range(0, ITERATION_COUNT):
+    for i in range(0, ITERATIONS):
         start_time = time.time()
         func(*args, **kwargs)
         end_time = time.time()
