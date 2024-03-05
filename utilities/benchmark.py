@@ -8,7 +8,18 @@ from config import ITERATION_COUNT
 ITERATIONS = ITERATION_COUNT
 
 
-def benchmark(func: Callable[..., Any], *args: Any, **kwargs: Any):
+def benchmark(func: Callable[..., Any], *args: Any, **kwargs: Any) -> dict:
+    """
+    Runs the given function a specified number of times and returns a dictionary containing the performance statistics.
+
+    Args:
+        func (Callable[..., Any]): The function to be benchmarked.
+        *args: Positional arguments to be passed to the function.
+        **kwargs: Keyword arguments to be passed to the function.
+
+    Returns:
+        dict: A dictionary containing the performance statistics, including the function name, number of iterations, mean, maximum, minimum, and median execution times.
+    """
     performance_result = {
         "name": func.__name__,
         "times": [],
@@ -31,7 +42,16 @@ def benchmark(func: Callable[..., Any], *args: Any, **kwargs: Any):
     return performance_result
 
 
-def _calculate_statistics(performance_statistics):
+def _calculate_statistics(performance_statistics: dict) -> dict:
+    """
+    Calculates the mean, maximum, minimum, and median of a list of times.
+
+    Args:
+        performance_statistics (dict): A dictionary containing the times and other performance statistics.
+
+    Returns:
+        dict: A dictionary containing the mean, maximum, minimum, and median of the times.
+    """
     performance_statistics["mean"] = statistics.mean(
         performance_statistics["times"]
     )

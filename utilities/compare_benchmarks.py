@@ -2,6 +2,21 @@ import matplotlib.pyplot as plt
 import textwrap
 
 def compare_benchmarks(*benchmarks):
+    """
+    Plots the performance results of multiple benchmarks.
+
+    Parameters
+    ----------
+    *benchmarks : list of dict
+        A list of dictionaries, where each dictionary represents a benchmark.
+        The required keys for each dictionary are "name" (the name of the benchmark)
+        and "times" (a list of times for each iteration of the benchmark).
+
+    Returns
+    -------
+    None
+
+    """
     for benchmark in benchmarks:
         plt.plot(benchmark["times"], label=benchmark["name"])
 
@@ -14,7 +29,23 @@ def compare_benchmarks(*benchmarks):
     plt.title(f"Performance Results for {names}")
     plt.show()
 
+
 def compare_statistics_benchmarks(*benchmarks):
+    """
+    Compares the statistical metrics of multiple benchmarks.
+
+    Parameters
+    ----------
+    *benchmarks : list of dict
+        A list of dictionaries, where each dictionary represents a benchmark.
+        The required keys for each dictionary are "name" (the name of the benchmark)
+        and the statistical metrics of interest (e.g., "mean", "median", etc.).
+
+    Returns
+    -------
+    None
+
+    """
     metrics = ["mean", "median", "minimum", "maximum"]
     num_metrics = len(metrics)
     num_benchmarks = len(benchmarks)
