@@ -7,14 +7,14 @@ def compare_benchmarks(*benchmarks):
 
     Parameters
     ----------
-    *benchmarks : list of dict
+    `*benchmarks` : list of dict
         A list of dictionaries, where each dictionary represents a benchmark.
         The required keys for each dictionary are "name" (the name of the benchmark)
         and "times" (a list of times for each iteration of the benchmark).
 
     Returns
     -------
-    None
+    `None`
 
     """
     for benchmark in benchmarks:
@@ -36,14 +36,14 @@ def compare_statistics_benchmarks(*benchmarks):
 
     Parameters
     ----------
-    *benchmarks : list of dict
+    `*benchmarks` : list of dict
         A list of dictionaries, where each dictionary represents a benchmark.
         The required keys for each dictionary are "name" (the name of the benchmark)
         and the statistical metrics of interest (e.g., "mean", "median", etc.).
 
     Returns
     -------
-    None
+    `None`
 
     """
     metrics = ["mean", "median", "minimum", "maximum"]
