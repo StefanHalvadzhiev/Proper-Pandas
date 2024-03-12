@@ -28,14 +28,16 @@ def benchmark(func: Callable[..., Any], *args: Any, **kwargs: Any) -> dict:
         "maximum": 0,
         "minimum": 0,
         "median": 0,
+        "returned": None
     }
 
     for i in range(0, ITERATIONS):
         start_time = time.time()
-        func(*args, **kwargs)
+        result_from_function = func(*args, **kwargs)
         end_time = time.time()
 
         performance_result["times"].append(end_time - start_time)
+        performance_result["returned"] = result_from_function
 
     performance_result = _calculate_statistics(performance_result)
 
