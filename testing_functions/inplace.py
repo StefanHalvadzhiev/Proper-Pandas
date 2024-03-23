@@ -1,10 +1,12 @@
 import pandas as pd
+import numpy as np
 
 
-def sort_strings_inplace(df: pd.DataFrame) -> pd.DataFrame:
-    df.apply(lambda x: x.sort_values(inplace=True), axis=0)
+# Function without inplace keyword
+def fillna(df: pd.DataFrame) -> pd.DataFrame:
+    return df.fillna(np.nan)
 
 
-def sort_strings(df: pd.DataFrame) -> pd.DataFrame:
-    return df.apply(lambda x: sorted(x), axis=0)
-
+# Function with inplace keyword
+def fillna_inplace(df: pd.DataFrame):
+    return df.fillna(np.nan, inplace=True)
